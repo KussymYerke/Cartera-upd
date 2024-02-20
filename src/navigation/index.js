@@ -1,0 +1,128 @@
+import {NavigationContainer} from "@react-navigation/native";
+import {createNativeStackNavigator} from "@react-navigation/native-stack";
+import { useColorScheme } from "react-native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+
+import SignInScreen from "../screens/SignInScreen";
+import SignUpScreen from "../screens/SignUpScreen";
+import SignUpCode from "../screens/SignUpScreen/SignUpCode";
+import SignUpPassword from "../screens/SignUpScreen/SignUpPassword";
+import ParentHomeScreen from "../screens/ParentHomeScreen/ParentHomeScreen";
+import ParentScreen from '../screens/ParentScreen/ParentScreen';
+import NewsScreen from "../screens/News/index"
+import HomeScreen from "../screens/HomeScreen";
+import FaceIdScreen from "../screens/FaceIdScreen/FaceIdScreen";
+import SucessIdScreen from "../screens/FaceIdScreen/SucessIdScreen";
+import NewsDetailsScreen from "../screens/NewsDetails/NewsDetailsScreen";
+import SearchScreen from "../screens/SearchScreen/SearchScreen";
+import Feed from "../screens/Profile";
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import UnixScreen from "../screens/Unix/Unix";
+import PinCodeScreen from "../screens/Pincode/PinCodeScreen";
+import MarketScreen from '../screens/MarketScreen/index';
+import Catalogue from "../screens/Catalogue/Catalogue";
+import Subscription from "../screens/Subscription/Subscription";
+import SubscriptionDetail from "../screens/Subscription/SubscriptionDetail";
+import NewCatalogueScreen from "../screens/NewCatalogueScreen/NewCatalogueScreen";
+import Events from '../screens/Events/Events';
+import EventDetail from '../screens/Events/EventDetail';
+
+const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+
+const StackNavigator = () => {
+
+    return (
+        <Stack.Navigator screenOptions={{
+            headerShown: false
+        }}>
+            <Stack.Screen name={"SignIn"} component={SignInScreen} />
+            <Stack.Screen name={"SignUp"} component={SignUpScreen} />
+            <Stack.Screen name={"SignUpCode"} component={SignUpCode} />
+            <Stack.Screen name={"SignUpPassword"} component={SignUpPassword} />    
+            <Stack.Screen name={"Home"} component={TabNavigator} />
+            <Stack.Screen name={"News"} component={NewsScreen} />
+            <Stack.Screen name={"Unix"} component={UnixScreen} />
+            <Stack.Screen name={"NewsDetails"} component={NewsDetailsScreen}
+                options={{animation: "slide_from_bottom"}}
+            />
+            <Stack.Screen name={"Search"} component={SearchScreen}/>
+            <Stack.Screen name={"PinCode"} component={PinCodeScreen}
+                options={{animation: "slide_from_bottom"}}
+            />
+            <Stack.Screen name={"Parent"} component={ParentHomeScreen} />
+            <Stack.Screen name={"AddParent"} component={ParentScreen} />
+            <Stack.Screen name={"FaceId"} component={FaceIdScreen}/>
+            <Stack.Screen name={"SuccessId"} component={SucessIdScreen}/>
+            <Stack.Screen name={"Market"} component={MarketScreen} />
+            <Stack.Screen name={"Catalogue"} component={Catalogue} />
+            <Stack.Screen name={"Subscription"} component={Subscription} />
+            <Stack.Screen name={"SubscriptionDetail"} component={SubscriptionDetail} />
+            <Stack.Screen name={"NewCatalogueScreen"} component={NewCatalogueScreen}/>
+            <Stack.Screen name={"Events"} component={Events}/>
+            <Stack.Screen name={'EventDetail'} component={EventDetail}/>
+        </Stack.Navigator>
+    )
+}
+
+const TabNavigator = () => {
+
+    const { colorScheme, toggleColorScheme } = useColorScheme();
+
+    return (
+        <Tab.Navigator screenOptions={({route}) => ({
+            headerShown: false,
+            tabBarStyle: {
+                height: 81,
+                borderTopLeftRadius: 20,
+                borderTopRightRadius: 20,
+                borderColor: '#FFFFFF',
+                backgroundColor: colorScheme === 'dark' ? 'black' : 'white',
+             },
+            tabBarLabelStyle: {
+                fontSize: 8,
+            },
+            tabBarIcon: ({ focused }) => {
+                
+                let iconName;
+
+                if(route.name === 'Главная'){
+                    iconName = 'home'
+                } else if (route.name === 'Профиль') {
+                    iconName = 'person-outline'
+                }
+                
+                const customSize = 25;
+
+                return(
+                    <Ionicons 
+                        name={iconName}
+                        size={customSize}
+                        color={focused ? "#2E4477" : "#8696BB"}
+                    />
+                )
+            },
+            tabBarActiveTintColor: "#2E4477",
+        })}>
+            <Tab.Screen name="Главная" component={HomeScreen}/>
+            <Tab.Screen options={{ 
+                headerShown: true, 
+                headerTitle: 'ПРОФИЛЬ СТУДЕНТА',
+                headerStyle: {
+                    backgroundColor: '#4F97A3', 
+                },
+                headerTintColor: '#FFFFFF',
+            }} name="Профиль" component={Feed} />
+        </Tab.Navigator>
+    )
+}
+
+const Navigation = () => {
+    return(
+        <NavigationContainer>
+            <StackNavigator />
+        </NavigationContainer>
+    )
+}
+
+export default Navigation;
